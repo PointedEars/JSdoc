@@ -1,0 +1,21 @@
+.jsdoc {
+  background-color: #fff;
+  color: #36c;
+  text-decoration: inherit;
+}
+
+.jsdoc-key {
+  background-color: #fff;
+  color: #69c;
+  font-weight: bold;
+}
+
+.jsdoc-entity,.jsdoc-tag {
+  background-color: #fff;
+  color: #669;
+}
+
+.jsdoc-link {
+  background-color: #fff;
+  color: #33c;
+}

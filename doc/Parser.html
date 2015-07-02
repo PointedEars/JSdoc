@@ -1,0 +1,1000 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+  "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>parser.js</title>
+<meta name="DCTERMS.created" content="2005-01-26T17:43+01:00">
+<meta name="DCTERMS.modified" content="2005-01-26T18:07+01:00">
+
+<link rel="stylesheet" href="../../style.css" type="text/css">
+<style type="text/css">
+<!--
+table {
+  border-collapse: collapse;
+  margin-bottom: 1em;
+  width: 100%;
+  border-right: 2px ridge black;
+}
+
+th,td {
+  border: 2px ridge black;
+  padding: 2px;
+}
+
+th {
+  background-color: #ccf;
+  color: #000;
+}
+
+td:first-child {
+  border-right: 0;
+}
+
+td+td {
+  border-left: 0;
+}
+
+h3,td dl {
+  margin: 0;
+  text-align: left;
+}
+
+h3 {
+  background-color: #ccf;
+  color: #000;
+  border: 2px ridge black;
+  padding: 2px;
+}
+
+th h3 {
+  border: 0;
+  padding: 0;
+}
+
+dl h5 {
+  margin-bottom: 0;
+}
+
+dl.hierarchy dd {
+  margin-left: 1em;
+  margin-bottom: 1em;
+}
+
+dl.hierarchy dd dd {
+  margin-left: 2em;
+}
+
+dl dl dt {
+  font-weight: bold;
+}
+
+dl.hierarchy dl dt,dl dl dl dt {
+  font-weight: normal;
+}
+-->
+</style>
+</head>
+
+<body>
+<hr>
+
+<h1><tt>parser.js</tt></h1>
+
+<h2><a href="#Parser" name="Parser" id="Parser">Prototype <code>Parser</code></a></h2>
+
+<dl class="hierarchy">
+  <dt><code><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/object.html">Object</a></code></dt>
+  <dd>
+  <dl>
+    <dt><img src="inherit.gif" width="15" height="14" alt="'-"
+      title="extended by"><b><tt>parser.</tt><code>Parser</code></b></dt>
+  </dl>
+  </dd>
+</dl>
+
+<table summary="Property Summary">
+  <tr>
+    <th colspan="2">
+    <h3>Property Summary</h3>
+    </th>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/string.html">string</a></code></td>
+    <td>
+    <dl>
+      <dt><code><a href="#Parser.text">text</a></code></dt>
+      <dd>Text to be parsed.</dd>
+    </dl>
+    </td>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/string.html">string</a></code></td>
+    <td>
+    <dl>
+      <dt><code><a href="#Parser.buffer">buffer</a></code></dt>
+      <dd>Result buffer after applying <a href="#Parser.tokens"><code>tokens</code></a>
+      on <a href="#Parser.text"><code>text</code></a>.</dd>
+    </dl>
+    </td>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code class="ident"><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/regexp.html">RegExp</a></code></td>
+    <td>
+    <dl>
+      <dt><code><a href="#Parser.buffer">tokens</a></code></dt>
+      <dd>Regular Expression to specify parseable token patterns.</dd>
+    </dl>
+    </td>
+  </tr>
+</table>
+
+<table summary="Constructor Summary">
+  <tr>
+    <th style="text-align: left">
+    <h3>Constructor Summary</h3>
+    </th>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td>
+    <dl>
+      <dt><code><a href="#Parser.Parser">Parser</a>(<a
+        href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/string.html">string</a>
+      <var>s</var>, <span class="ident"><a
+        href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/regexp.html">RegExp</a></span>
+      <var>t</var>)</code></dt>
+      <dd>Constructs a newly allocated <code class="ident">Parser</code>
+      object using the text <code><var>s</var></code> and the token(s) <code><var>t</var></code>.</dd>
+    </dl>
+    </td>
+  </tr>
+</table>
+
+<table summary="Prototype Method Summary">
+  <tr>
+    <th colspan="2">
+    <h3><a name="Parser.prototype" id="Parser.prototype">Prototype
+    Method Summary</a></h3>
+    </th>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code class="rswd"><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/boolean.html">boolean</a></code></td>
+    <td>
+    <dl>
+      <dt><code><b><a href="#Parser.prototype.EOT">EOT</a></b>()</code></dt>
+      <dd>Returns <code class="rswd">true</code> if no more tokens
+      can be matched.</dd>
+    </dl>
+    </td>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/string.html">string</a></code></td>
+    <td>
+    <dl>
+      <dt><code><b><a href="#Parser.prototype.clear">clear</a></b>()</code></dt>
+      <dd>Clears the read buffer.</dd>
+    </dl>
+    </td>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code><b><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/Object.html">Object</a></b></code></td>
+    <td>
+    <dl>
+      <dt><code><b><a href="#Parser.prototype.read">read</a></b>(<a
+        href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/number.html">number</a>
+      <var>iChars</var>)</code></dt>
+      <dd>Reads the next token into the buffer and moves the start
+      index.</dd>
+    </dl>
+    </td>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/number.html">number</a></code></td>
+    <td>
+    <dl>
+      <dt><code><b><a href="#Parser.prototype.readEOLn">readEOLn</a></b>()</code></dt>
+      <dd>Reads into the buffer until End Of Line and moves the
+      start index.</dd>
+    </dl>
+    </td>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code></code></td>
+    <td>
+    <dl>
+      <dt><code><b><a href="#Parser.prototype.reset">reset</a></b>(<span
+        class="ident"><a
+        href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/regexp.html">RegExp</a></span>
+      <var>t</var>, <a
+        href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/string.html">string</a>
+      <var>s</var>)</code></dt>
+      <dd>Resets the parser, changes the parsing tokens and the
+      parse target.</dd>
+    </dl>
+    </td>
+  </tr>
+</table>
+
+<h3>Property Detail</h3>
+
+<h4><a href="#Parser">Parser</a>.<a href="#Parser.text"
+  name="Parser.text" id="Parser.text">text</a></h4>
+
+<dl>
+  <dt><code><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/string.html">string</a>
+  text</code></dt>
+  <dd>Text to be parsed.</dd>
+</dl>
+
+<hr>
+
+<h4><a href="#Parser">Parser</a>.<a href="#Parser.buffer"
+  name="Parser.buffer" id="Parser.buffer">buffer</a></h4>
+
+<dl>
+  <dt><code><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/string.html">string</a>
+  buffer</code></dt>
+  <dd>Result buffer after applying <a href="#Parser.tokens"><code>tokens</code></a>
+  on <a href="#Parser.text"><code>text</code></a>.</dd>
+</dl>
+
+<hr>
+
+<h4><a href="#Parser">Parser</a>.<a href="#Parser.tokens"
+  name="Parser.tokens" id="Parser.tokens">tokens</a></h4>
+
+<dl>
+  <dt><code class="ident"><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/regexp.html">RegExp</a></code>
+  <code>tokens</code></dt>
+  <dd>Regular Expression to specify parseable token patterns.</dd>
+</dl>
+
+<h3>Constructor Detail</h3>
+
+<h4><a href="#Parser.Parser" name="Parser.Parser"
+  id="Parser.Parser">Parser</a></h4>
+
+<dl>
+  <dt><code><span class="ident">Parser</span>([<a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/string.html">string</a>
+  <var>s</var>[, <span class="ident"><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/regexp.html">RegExp</a></span>
+  <var>t</var>]])</code></dt>
+  <dd>
+  <p>Constructs a newly allocated <code class="ident">Parser</code>
+  object using the text <code><var>s</var></code> and the token(s) <code><var>t</var></code>.</p>
+  <dl>
+    <dt>Arguments:</dt>
+    <dd>
+    <dl>
+      <dt><code><var>s</var></code></dt>
+      <dd>Text to be parsed.</dd>
+
+      <dt><code><var>t</var></code></dt>
+      <dd>(Paranthesed) token patterns (use alternation).</dd>
+    </dl>
+    </dd>
+  </dl>
+  </dd>
+</dl>
+
+<h3>Prototype Method Detail</h3>
+
+<h4><a href="#Parser">Parser</a>.<a href="#Parser.prototype">prototype</a>.<a
+  href="#Parser.prototype.EOT" name="Parser.prototype.EOT"
+  id="Parser.prototype.EOT">EOT</a></h4>
+
+<dl>
+  <dt><code class="rswd"><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/boolean.html">boolean</a></code>
+  <code><span class="ident">EOT</span>()</code></dt>
+  <dd>
+  <dl>
+    <dt>Returns:</dt>
+    <dd><code class="rswd">true</code> if no more tokens can be
+    matched.</dd>
+  </dl>
+  </dd>
+</dl>
+
+<hr>
+
+<h4><a href="#Parser">Parser</a>.<a href="#Parser.prototype">prototype</a>.<a
+  href="#Parser.prototype.clear" name="Parser.prototype.clear"
+  id="Parser.prototype.clear">clear</a></h4>
+
+<dl>
+  <dt><code><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/string.html">string</a>
+  <span class="ident">clear</span>()</code></dt>
+  <dd>
+  <p>Clears the read buffer.</p>
+  <dl>
+    <dt>Returns:</dt>
+    <dd>The buffer content (should be empty).</dd>
+  </dl>
+  </dd>
+</dl>
+
+<hr>
+
+<h4><a href="#Parser">Parser</a>.<a href="#Parser.prototype">prototype</a>.<a
+  href="#Parser.prototype.read" name="Parser.prototype.read"
+  id="Parser.prototype.read">read</a></h4>
+
+<dl>
+  <dt><code><b><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/object.html">Object</a></b>
+  <span class="ident">read</span>()</code></dt>
+  <dd>
+  <p>Reads the next token into the buffer and moves the start index.</p>
+  <dl>
+    <dt>Returns:</dt>
+    <dd>The new buffer.</dd>
+
+    <dt>See also:</dt>
+    <dd><code><b><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/regexp.html">RegExp</a>.<span
+      class="ident">exec</span></b></code></dd>
+  </dl>
+  </dd>
+</dl>
+
+<hr>
+
+<h4><a href="#Parser">Parser</a>.<a href="#Parser.prototype">prototype</a>.<a
+  href="#Parser.prototype.readEOLn" name="Parser.prototype.readEOLn"
+  id="Parser.prototype.readEOLn">readEOLn</a></h4>
+
+<dl>
+  <dt><code><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/number.html">number</a>
+  <span class="ident">readEOLn</span>()</code></dt>
+  <dd>
+  <p>Reads into the buffer until End Of Line and moves the start
+  index.</p>
+  <dl>
+    <dt>Returns:</dt>
+    <dd>The new start index.</dd>
+  </dl>
+  </dd>
+</dl>
+
+<hr>
+
+<h4><a href="#Parser">Parser</a>.<a href="#Parser.prototype">prototype</a>.<a
+  href="#Parser.prototype.reset" name="Parser.prototype.reset"
+  id="Parser.prototype.reset">reset</a></h4>
+
+<dl>
+  <dt><code><span class="ident">reset</span>([<span
+    class="ident"><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/regexp.html">RegExp</a></span>
+  <var>t</var>[, <a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/string.html">string</a>
+  <var>s</var>]])</code></dt>
+  <dd>Resets the parser, changes the parsing tokens and the parse
+  target.</dd>
+</dl>
+
+<hr>
+
+<h2><a href="#JSdocParser" name="JSdocParser" id="JSdocParser">Prototype
+<code>JSdocParser</code></a></h2>
+
+<dl class="hierarchy">
+  <dt><code><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/object.html">Object</a></code></dt>
+  <dd>
+  <dl>
+    <dt><img src="inherit.gif" width="15" height="14" alt="'-"
+      title="extended by"><a href="#Parser"><tt>parser.</tt><code>Parser</code></a></dt>
+    <dd>
+    <dl>
+      <dt><img src="inherit.gif" width="15" height="14" alt="'-"
+        title="extended by"><b><tt>parser.</tt><code>JSdocParser</code></b></dt>
+    </dl>
+    </dd>
+  </dl>
+  </dd>
+</dl>
+
+<table summary="Property Summary">
+  <tr>
+    <th colspan="2">
+    <h3>Property Summary</h3>
+    </th>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/string.html">string</a></code></td>
+    <td>
+    <dl>
+      <dt><code><a href="#JSdocParser.filename">filename</a></code></dt>
+      <dd></dd>
+    </dl>
+    </td>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code class="ident"><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/array.html">Array</a></code></td>
+    <td>
+    <dl>
+      <dt><code><a href="#JSdocParser.globalVars">globalVals</a></code></dt>
+      <dd></dd>
+    </dl>
+    </td>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code class="ident"><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/array.html">Array</a></code></td>
+    <td>
+    <dl>
+      <dt><code><a href="#JSdocParser.globalConsts">globalConsts</a></code></dt>
+      <dd></dd>
+    </dl>
+    </td>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code class="ident"><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/array.html">Array</a></code></td>
+    <td>
+    <dl>
+      <dt><code><a href="#JSdocParser.items">items</a></code></dt>
+      <dd></dd>
+    </dl>
+    </td>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code class="ident"><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/array.html">Array</a></code></td>
+    <td>
+    <dl>
+      <dt><code><a href="#JSdocParser.methods">methods</a></code></dt>
+      <dd></dd>
+    </dl>
+    </td>
+  </tr>
+</table>
+
+<table summary="Constructor Summary">
+  <tr>
+    <th style="text-align: left">
+    <h3>Constructor Summary</h3>
+    </th>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td>
+    <dl>
+      <dt><code><a href="#JSdocParser.JSdocParser">JSdocParser</a>(<a
+        href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/string.html">string</a>
+      <var>s</var>, <a
+        href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/string.html">string</a>
+      <var>sFileName</var>)</code></dt>
+      <dd>Constructs a newly allocated <code class="ident">JSdocParser</code>
+      object using the text <code><var>s</var></code>. <var>sFileName</var>
+      is used to specify the original filename.</dd>
+    </dl>
+    </td>
+  </tr>
+</table>
+
+<table summary="Prototype Property Summary">
+  <tr>
+    <th colspan="2">
+    <h3>Prototype Property Summary</h3>
+    </th>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code class="rswd"><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/array.html">Array</a></code></td>
+    <td>
+    <dl>
+      <dt><code><a
+        href="#JSdocParser.prototype.reservedWords">reservedWords</a></code></dt>
+      <dd>Reserved words to be highlighted.</dd>
+    </dl>
+    </td>
+  </tr>
+</table>
+
+<table summary="Prototype Method Summary">
+  <tr>
+    <th colspan="2">
+    <h3>Prototype Method Summary</h3>
+    </th>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code class="rswd"><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/array.html">Array</a></code></td>
+    <td>
+    <dl>
+      <dt><code><b><a
+        href="#JSdocParser.prototype.parse">parse</a></b>()</code></dt>
+      <dd>Accumulates all JSdoc tokens in arrays.</dd>
+    </dl>
+    </td>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code class="rswd"><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/boolean.html">boolean</a></code></td>
+    <td>
+    <dl>
+      <dt><code><b><a
+        href="#JSdocParser.prototype.writeHTML">writeHTML</a></b>()</code></dt>
+      <dd>Creates a HTML documentation from the parsed JSdoc
+      comments.</dd>
+    </dl>
+    </td>
+  </tr>
+</table>
+
+<h3>Property Detail</h3>
+
+<h4><a href="#JSdocParser">JSdocParser</a>.<a
+  href="#JSdocParser.filename" name="JSdocParser.filename"
+  id="JSdocParser.filename">filename</a></h4>
+
+<dl>
+  <dt><code><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/string.html">string</a>
+  filename</code></dt>
+  <dd></dd>
+</dl>
+
+<hr>
+
+<h4><a href="#JSdocParser">JSdocParser</a>.<a
+  href="#JSdocParser.globalVars" name="JSdocParser.globalVars"
+  id="JSdocParser.globalVars">globalVals</a></h4>
+
+<dl>
+  <dt><code class="ident"><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/array.html">Array</a></code>
+  <code>globalVals</code></dt>
+  <dd></dd>
+</dl>
+
+<hr>
+
+<h4><a href="#JSdocParser">JSdocParser</a>.<a
+  href="#JSdocParser.globalConst" name="JSdocParser.globalConst"
+  id="JSdocParser.globalConst">globalConst</a></h4>
+
+<dl>
+  <dt><code class="ident"><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/array.html">Array</a></code>
+  <code>globalConsts</code></dt>
+  <dd></dd>
+</dl>
+
+<hr>
+
+<h4><a href="#JSdocParser">JSdocParser</a>.<a
+  href="#JSdocParser.items" name="JSdocParser.items"
+  id="JSdocParser.items">items</a></h4>
+
+<dl>
+  <dt><code class="ident"><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/array.html">Array</a></code>
+  <code>items</code></dt>
+  <dd></dd>
+</dl>
+
+<hr>
+
+<h4><a href="#JSdocParser">JSdocParser</a>.<a
+  href="#JSdocParser.methods" name="JSdocParser.methods"
+  id="JSdocParser.methods">methods</a></h4>
+
+<dl>
+  <dt><code class="ident"><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/array.html">Array</a></code>
+  <code>methods</code></dt>
+  <dd></dd>
+</dl>
+
+<h3>Constructor Detail</h3>
+
+<h4><a href="#JSdocParser.JSdocParser"
+  name="JSdocParser.JSdocParser" id="JSdocParser.JSdocParser">JSdocParser</a></h4>
+
+<dl>
+  <dt><code><span class="ident">JSdocParser</span>([<a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/string.html">string</a>
+  <var>s</var>[, <a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/string.html">string</a>
+  <var>sFileName</var>]])</code></dt>
+  <dd>
+  <p>Constructs a newly allocated <code class="ident">JSdocParser</code>
+  object using the text <code><var>s</var></code>. <var>sFileName</var>
+  is used to specify the original filename.</p>
+  <dl>
+    <dt>Arguments:</dt>
+    <dd>
+    <dl>
+      <dt><var>s</var></dt>
+      <dd>Source code to be parsed.</dd>
+
+      <dt><var>sFileName</var></dt>
+      <dd>Name of the file where the source code originates to be
+      assigned <a href="#JSdocParser.filename">filename</a> property. If
+      omitted, &quot;unnamed&quot; is used.</dd>
+    </dl>
+    </dd>
+  </dl>
+  </dd>
+</dl>
+
+<h3>Prototype Property Detail</h3>
+
+<h4><a href="#JSdocParser">JSdocParser</a>.<a
+  href="#JSdocParser.prototype">prototype</a>.<a
+  href="#JSdocParser.prototype.reservedWords"
+  name="JSdocParser.prototype.reservedWords"
+  id="JSdocParser.prototype.reservedWords">reservedWords</a></h4>
+
+<dl>
+  <dt><code class="rswd"><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/array.html">Array</a></code>
+  <code>reservedWords</code></dt>
+  <dd>Reserved words to be highlighted.</dd>
+</dl>
+
+<h3>Prototype Method Detail</h3>
+
+<h4><a href="#JSdocParser">JSdocParser</a>.<a
+  href="#JSdocParser.prototype">prototype</a>.<a
+  href="#JSdocParser.prototype.parse" name="JSdocParser.prototype.parse"
+  id="JSdocParser.prototype.parse">parse</a></h4>
+
+<dl>
+  <dt><code class="rswd"><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/array.html">Array</a></code>
+  <code><span class="ident">parse</span>()</code></dt>
+  <dd>Accumulates all JSdoc tokens in arrays.</dd>
+</dl>
+
+<hr>
+
+<h4><a href="#JSdocParser">JSdocParser</a>.<a
+  href="#JSdocParser.prototype">prototype</a>.<a
+  href="#JSdocParser.prototype.writeHTML"
+  name="JSdocParser.prototype.writeHTML"
+  id="JSdocParser.prototype.writeHTML">writeHTML</a></h4>
+
+<dl>
+  <dt><code class="rswd"><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/boolean.html">boolean</a></code>
+  <code><span class="ident">writeHTML</span>()</code></dt>
+  <dd>Creates a HTML documentation from the parsed JSdoc comments.</dd>
+</dl>
+
+<hr>
+
+<h2><a href="#JSdocItem" name="JSdocItem" id="JSdocItem">Prototype
+<code>JSdocItem</code></a></h2>
+
+<dl class="hierarchy">
+  <dt><code><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/object.html">Object</a></code></dt>
+  <dd>
+  <dl>
+    <dt><img src="inherit.gif" width="15" height="14" alt="'-"
+      title="extended by"><b><tt>parser.</tt><code>JSdocItem</code></b></dt>
+  </dl>
+  </dd>
+</dl>
+
+<table summary="Property Summary">
+  <tr>
+    <th colspan="2">
+    <h3>Property Summary</h3>
+    </th>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code class="rswd"><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/array.html">Array</a></code></td>
+    <td>
+    <dl>
+      <dt><code>items</code></dt>
+      <dd>&nbsp;</dd>
+    </dl>
+    </td>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code class="ident">Parser</code></td>
+    <td>
+    <dl>
+      <dt><code>parser</code></dt>
+      <dd>&nbsp;</dd>
+    </dl>
+    </td>
+  </tr>
+</table>
+
+<table summary="Constructor Summary">
+  <tr>
+    <th style="text-align: left">
+    <h3>Constructor Summary</h3>
+    </th>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td>
+    <dl>
+      <dt><code><a href="#JSdocItem.JSdocItem">JSdocItem</a>(<a
+        href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/string.html">string</a>
+      <var>s</var>, <span class="ident"><a
+        href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/regexp.html">RegExp</a></span>
+      <var>t</var>, <span class="ident"><a href="#Parser">Parser</a></span>
+      <var>p</var>)</code></dt>
+      <dd>Constructs a newly allocated <code class="ident">JSdocItem</code>
+      object using the text <code><var>s</var></code>, token(s) <code><var>t</var></code>
+      and <code class="ident">Parser</code> object <code><var>p</var></code>.</dd>
+    </dl>
+    </td>
+  </tr>
+</table>
+
+<h3>Property Detail</h3>
+
+<h4><a href="#JSdocItem.items" name="JSdocItem.items"
+  id="JSdocItem.items">items</a></h4>
+
+<dl>
+  <dt><code class="rswd"><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/array.html">Array</a></code>
+  <code>items</code></dt>
+  <dd>&nbsp;</dd>
+</dl>
+
+<hr>
+
+<h4><a href="#JSdocItem.parser" name="JSdocItem.parser"
+  id="JSdocItem.parser">parser</a></h4>
+
+<dl>
+  <dt><code class="ident">Parser</code> <code>parser</code></dt>
+  <dd>&nbsp;</dd>
+</dl>
+
+<h3>Constructor Detail</h3>
+
+<h4><a href="#JSdocItem.JSdocItem" name="JSdocItem.JSdocItem"
+  id="JSdocItem.JSdocItem">JSdocItem</a></h4>
+
+<dl>
+  <dt><code><span class="ident">JSdocItem</span>([<a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/string.html">string</a>
+  <var>s</var>[, <span class="ident"><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/regexp.html">RegExp</a></span>
+  <var>t</var>[, <span class="ident"><a href="#Parser">Parser</a></span>
+  <var>p</var>]]])</code></dt>
+  <dd>
+  <p>Constructs a newly allocated <code class="ident">JSdocItem</code>
+  object using the text <code><var>s</var></code>, token(s) <code><var>t</var></code>
+  and <code class="ident">Parser</code> object <code><var>p</var></code>.</p>
+  <dl>
+    <dt>Arguments:</dt>
+    <dd>
+    <dl>
+      <dt><var>s</var></dt>
+      <dd>Source code to be parsed.</dd>
+
+      <dt><code><var>t</var></code></dt>
+      <dd>(Paranthesed) token patterns (use alternation).</dd>
+
+      <dt><code><var>p</var></code></dt>
+      <dd><code class="ident">Parser</code> object.</dd>
+    </dl>
+    </dd>
+  </dl>
+  </dd>
+</dl>
+
+<hr>
+
+<h2><a href="#Method" name="Method" id="Method">Prototype <code>Method</code></a></h2>
+
+<dl class="hierarchy">
+  <dt><code><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/object.html">Object</a></code></dt>
+  <dd>
+  <dl>
+    <dt><img src="inherit.gif" width="15" height="14" alt="'-"
+      title="extended by"><a href="#JSdocItem"><tt>parser.</tt><code>JSdocItem</code></a></dt>
+    <dd>
+    <dl>
+      <dt><img src="inherit.gif" width="15" height="14" alt="'-"
+        title="extended by"><b><tt>parser.</tt><code>Method</code></b></dt>
+    </dl>
+    </dd>
+  </dl>
+  </dd>
+</dl>
+
+<table summary="Constructor Summary">
+  <tr>
+    <th style="text-align: left">
+    <h3>Constructor Summary</h3>
+    </th>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td>
+    <dl>
+      <dt><code><a href="#Method.Method">Method</a>(<a
+        href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/string.html">string</a>
+      <var>s</var>, <span class="ident"><a href="#Parser">Parser</a></span>
+      <var>p</var>)</code></dt>
+      <dd>Constructs a newly allocated <code class="ident">Method</code>
+      object using the text <code><var>s</var></code>, token(s) <code><var>t</var></code>
+      and <code class="ident">Parser</code> object <code><var>p</var></code>.</dd>
+    </dl>
+    </td>
+  </tr>
+</table>
+
+<table summary="Property Summary">
+  <tr>
+    <th colspan="2">
+    <h3>Property Summary</h3>
+    </th>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/string.html">string</a></code></td>
+    <td>
+    <dl>
+      <dt><code>body</code></dt>
+      <dd>&nbsp;</dd>
+    </dl>
+    </td>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code class="rswd"><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/array.html">Array</a></code></td>
+    <td>
+    <dl>
+      <dt><code>consts</code></dt>
+      <dd>&nbsp;</dd>
+    </dl>
+    </td>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code class="rswd"><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/array.html">Array</a></code></td>
+    <td>
+    <dl>
+      <dt><code>exceptions</code></dt>
+      <dd>&nbsp;</dd>
+    </dl>
+    </td>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/string.html">string</a></code></td>
+    <td>
+    <dl>
+      <dt><code>identifier</code></dt>
+      <dd>&nbsp;</dd>
+    </dl>
+    </td>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code class="rswd"><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/boolean.html">boolean</a></code></td>
+    <td>
+    <dl>
+      <dt><code>isPrototype</code></dt>
+      <dd>&nbsp;</dd>
+    </dl>
+    </td>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code class="rswd"><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/boolean.html">boolean</a></code></td>
+    <td>
+    <dl>
+      <dt><code>isPrototypeMethod</code></dt>
+      <dd>&nbsp;</dd>
+    </dl>
+    </td>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td style="text-align: right"><code class="rswd"><a
+      href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/array.html">Array</a></code></td>
+    <td>
+    <dl>
+      <dt><code>vars</code></dt>
+      <dd>&nbsp;</dd>
+    </dl>
+    </td>
+  </tr>
+</table>
+
+<hr>
+
+<h2><a href="#JSdocComment" name="JSdocComment" id="JSdocComment">Prototype
+<code>JSdocComment</code></a></h2>
+
+<dl class="hierarchy">
+  <dt><code><a
+    href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/object.html">Object</a></code></dt>
+  <dd>
+  <dl>
+    <dt><img src="inherit.gif" width="15" height="14" alt="'-"
+      title="extended by"><a href="#JSdocItem"><tt>parser.</tt><code>JSdocItem</code></a></dt>
+    <dd>
+    <dl>
+      <dt><img src="inherit.gif" width="15" height="14" alt="'-"
+        title="extended by"><b><tt>parser.</tt><code>JSdocComment</code></b></dt>
+    </dl>
+    </dd>
+  </dl>
+  </dd>
+</dl>
+
+<table summary="Constructor Summary">
+  <tr>
+    <th style="text-align: left">
+    <h3>Constructor Summary</h3>
+    </th>
+  </tr>
+
+  <tr style="vertical-align: top">
+    <td>
+    <dl>
+      <dt><code><a href="#JSdocComment.JSdocComment">JSdocComment</a>(<a
+        href="http://web.archive.org/devedge.netscape.com/library/manuals/2000/javascript/1.5/reference/string.html">string</a>
+      <var>s</var>, <span class="ident"><a href="#Parser">Parser</a></span>
+      <var>p</var>)</code></dt>
+      <dd>Constructs a newly allocated <code class="ident">JSdocComment</code>
+      object using the text <code><var>s</var></code>, token(s) <code><var>t</var></code>
+      and <code class="ident">Parser</code> object <code><var>p</var></code>.</dd>
+    </dl>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
