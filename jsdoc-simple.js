@@ -22,7 +22,6 @@ if (typeof jsx.string == "undefined")
 jsx.string.parser = (/** constructor */ function () {
   /* Imports */
   var _isString = jsx.object.isString;
-
   /* Private functions */
   /**
    * Returns a global regular expression.
@@ -136,8 +135,7 @@ jsx.string.parser = (/** constructor */ function () {
           var index = match.index;
           var match_length = match[0].length;
           if (index < used_match.index
-              || (index == used_match.index
-                  && match_length > used_match.length))
+              || (index == used_match.index && match_length > used_match.length))
           {
             used_match.index = index;
             used_match.match = match;
@@ -148,11 +146,11 @@ jsx.string.parser = (/** constructor */ function () {
         }
       }
 
-      match = used_match.match;
-      if (match)
+      if (used_match.match)
       {
         this.lastIndex = used_match.lastIndex;
-        used_match.token.match = match;
+
+        used_match.token.match = used_match.match;
 
         return used_match.token;
       }
@@ -236,7 +234,6 @@ de.pointedears.jsdoc = (/** @constructor */ function () {
 //    }
 //  });
 
-  var _TOKEN_WHITESPACE = "WHITESPACE"
   var _TOKEN_NEWLINE = "NEWLINE";
   var _TOKEN_COMMENT_SINGLE = "COMMENT_SINGLE";
   var _TOKEN_COMMENT_MULTI = "COMMENT_MULTI";
@@ -247,20 +244,7 @@ de.pointedears.jsdoc = (/** @constructor */ function () {
   var _TOKEN_FUNCTION = "FUNCTION";
   var _TOKEN_BRACE = "BRACE";
 
-  var _token_newline = new _Token(/\r?\n|[\r\u2028\u2029]/, _TOKEN_NEWLINE);
-  var _srxUnicodeLetter = "\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}";
-  var _srxHexDigit = "[\\da-fA-F]";
-  var _srxUnicodeEscapeSequence = "\\\\u" + _srxHexDigit + "{4}";
-  var _srxIdentifierStart = _srxUnicodeLetter + "$_" + _srxUnicodeEscapeSequence;
-  var _srxUnicodeCombiningMark = "\p{Mn}\p{Mc}";
-  var _srxUnicodeDigit = "\\{Nd}";
-  var _srxUnicodeConnectorPunctuation = "\\p{Pc}";
-  var _srxIdentifierPart =
-    + _srxIdentifierStart
-    + _srxUnicodeCombiningMark
-    + _srxUnicodeDigit
-    + _srxUnicodeConnectorPunctuation;
-  var _srxIdentifierName = "[" + _srxIdentifierStart + "][" + _srxIdentifierPart + "]*"
+  var _token_newline = new _Token(/\r?\n|\r/, _TOKEN_NEWLINE);
 
   return {
     /**
@@ -281,17 +265,13 @@ de.pointedears.jsdoc = (/** @constructor */ function () {
       prevToken: null,
 
       tokens: [
-        new _Token(
-          /[\t\x0b\x0c \xa0\uFEFF\u1680\u180E\u2000-\u200A\u202F\u205F\u3000]+/,
-          _TOKEN_WHITESPACE),
         _token_newline,
-        new _Token(/\/\*(\*)?([^*]|\*[^\/])+\*\//, _TOKEN_COMMENT_MULTI),
         new _Token(/\/\/.*/, _TOKEN_COMMENT_SINGLE),
-        new _Token(new jsx.regexp.RegExp(_srxIdentifierName), _TOKEN_IDENTIFIER),
+        new _Token(/\/\*([^*]|\*[^\/])+\*\//, _TOKEN_COMMENT_MULTI),
         new _Token(/\/([^\r\n\/\\]|\\[^\r\n])+\/'/, _TOKEN_REGEXP),
-        new _Token(/"([^\r\n"\\]|\\[\S\s])*"|'([^\\']|\\[\S\s])*'/, _TOKEN_STRING),
-        new _Token(/\bvar\s+?/, _TOKEN_VAR),
-        new _Token(/\bfunction(?:\s+(\w+))?\s*\(([^\)]+)\)\s*\{/, _TOKEN_FUNCTION),
+        new _Token(/"([^\r\n"\\]|\\.)*"|'([^\\']|\\.)*'/, _TOKEN_STRING),
+        new _Token(/\bvar\s+(\w+)/, _TOKEN_VAR),
+        new _Token(/\bfunction(?:\s+\w+)?\s*\([^)]+\)\s*\{/, _TOKEN_FUNCTION),
         new _Token(/[{}]/, _TOKEN_BRACE)
       ],
 
@@ -315,7 +295,7 @@ de.pointedears.jsdoc = (/** @constructor */ function () {
             break;
 
           case _TOKEN_COMMENT_MULTI:
-            if (token.match[1])
+            if (token.match[0].charAt(2) == "*")
             {
               token.type = _TOKEN_JSDOC;
             }
